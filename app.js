@@ -17,6 +17,22 @@ const getPrices = async (symbol, interval, startTime) => {
 
 const hadIncreased = (prevPeriod, currentPeriod) => prevPeriod.averagePrice < currentPeriod.averagePrice;
 
+const visualizeData = (pricesChange, symbol) => {
+    console.log(`The price of ${symbol} has changed accordingly: `)
+
+    pricesChange.forEach((change, index) => {
+        if (index % 100 === 0) {
+            const date = new Date(change.timestamp)
+            const [year, month, day, hour, minute, second] = [date.getFullYear(), date.getMonth(), date.getDay(), date.getHours, date.getMinutes, date.getSeconds]
+            process.stdout.write(`\n${year}.${month}.${day}\n`)
+        }
+
+        process.stdout.write(change.hasIncreased ? '^' : 'v')
+    })
+
+    console.log()
+}
+
 const main = async () => {
     const [cryptoPair, period, timestamp] = ['LTCBTC', '1d', '1695637619']
 
@@ -27,8 +43,10 @@ const main = async () => {
 
         const hasPriceIncreased = hadIncreased(pricesOverTime[index - 1], pricePeriod);
 
-        return [...acc, hasPriceIncreased]
+        return [...acc, { timestamp: pricePeriod.openTime, hasIncreased: hasPriceIncreased }]
     }, []);
+
+    visualizeData(priceChangeOvertime, cryptoPair);
 }
 
 main()
