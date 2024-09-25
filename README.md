@@ -11,3 +11,8 @@ npm i
 ```
 npm run start
 ```
+## Tests
+The Jest has been used to test hadIncreased method. Run tests with
+```bash
+npm run test
+```
