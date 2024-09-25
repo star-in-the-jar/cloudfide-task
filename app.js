@@ -1,3 +1,5 @@
+const { hadIncreased } = require('./hadIncreased')
+
 const getPrices = async (symbol, interval, startTime) => {
 
     // docs https://binance-docs.github.io/apidocs/spot/en/#uiklines
@@ -15,7 +17,6 @@ const getPrices = async (symbol, interval, startTime) => {
     return mappedData;
 }
 
-const hadIncreased = (prevPeriod, currentPeriod) => prevPeriod.averagePrice < currentPeriod.averagePrice;
 
 const visualizeData = (pricesChange, symbol) => {
     console.log(`The price of ${symbol} has changed accordingly: `)
